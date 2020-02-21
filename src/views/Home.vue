@@ -17,6 +17,11 @@
     <div v-for="place in places">
       <h2>{{place.name}}</h2>
       
+      <div v-if="currentPlace === place">
+        <p>{{place.address}}</p>
+      </div>
+      <button v-on:click="showAddress(place)">Show Address</button>
+      
     </div>
   </div>
 </template>
@@ -32,7 +37,8 @@ export default {
       message: "Places App!",
       places: [],
       newPlaceAddress: "",
-      newPlaceName: ""
+      newPlaceName: "",
+      currentPlace: {}
     };
   },
   created: function() {
@@ -50,10 +56,14 @@ export default {
         this.places.push(response.data);
         this.newPlaceName = "";
         this.newPlaceAddress = "";
-
-
       });
-
+    },
+    showAddress: function(place) {
+      if (this.currentPlace === place) {
+        this.currentPlace = {};
+      } else {
+        this.currentPlace = place;
+      }
     }
   }
 };
